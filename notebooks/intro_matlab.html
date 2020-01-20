@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-01-20 Mon 12:47 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Intro to MATLAB</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Gustavo Pereira" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="http://dakrone.github.io/org.css" type="text/css" />
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Intro to MATLAB</h1>
+
+
+<div id="outline-container-org71d351f" class="outline-2">
+<h2 id="org71d351f">(Almost) everything is a matrix</h2>
+<div class="outline-text-2" id="text-org71d351f">
+<ul class="org-ul">
+<li>In MATLAB, the most common data type is a matrix of real (or more precisely, floating point) numbers.</li>
+<li>All the following commands create an object of the type Matrix, with floating point elements:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-matlab">u = [1,2.5,3];
+A = [1 2 3; 4 5 6];
+b = 2.5;
+c = <span style="color: #D0372D;">pi</span>;
+</pre>
+</div>
+<ul class="org-ul">
+<li><p>
+You can inspect dimension of the objects by applying the function <code>size</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">size(u)
+size(A)
+size(b)
+size(c)
+</pre>
+</div>
+
+<pre class="example">
+size(u)
+
+ans =
+
+     1     3
+size(A)
+
+ans =
+
+     2     3
+size(b)
+
+ans =
+
+     1     1
+size(c)
+
+ans =
+
+     1     1
+</pre></li>
+<li>There are data types other than matrices. For example
+<dl class="org-dl">
+<dt>structs</dt><dd>An object that groups sub-objects of any type.</dd>
+<dt>characters/strings</dt><dd>used to store text</dd>
+<dt>tables</dt><dd>as the name suggests, ; similar to <code>data.frame</code> in R</dd>
+</dl></li>
+<li>For details, check out the matlab <a href="https://www.mathworks.com/help/matlab/data-types.html">documentation</a> on data types</li>
+</ul>
+</div>
+
+<div id="outline-container-org81b7dd6" class="outline-3">
+<h3 id="org81b7dd6">Basic matrix commands</h3>
+<div class="outline-text-3" id="text-org81b7dd6">
+<dl class="org-dl">
+<dt>zeros</dt><dd><p>
+generates a matrix of zeros of specified dimension. 
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">zeros(2,2)
+
+zeros(3,1)
+</pre>
+</div>
+
+<pre class="example">
+zeros(2,2)
+
+ans =
+
+     0     0
+     0     0
+zeros(3,1)
+
+ans =
+
+     0
+     0
+     0
+</pre></dd>
+<dt>ones</dt><dd>similar to <code>zeros</code>, but with ones</dd>
+<dt>diag</dt><dd>if the input is  a
+<ul class="org-ul">
+<li><p>
+<i>row/column vector</i>: creates a diagonal matrix whose main diagonal consists of those elements
+</p>
+
+<div class="org-src-container">
+<pre class="src src-matlab">diag([1,2,5])
+</pre>
+</div>
+
+<pre class="example">
+diag([1,2,5])
+
+ans =
+
+     1     0     0
+     0     2     0
+     0     0     5
+</pre></li>
+
+<li><p>
+<i>matrix</i>:  extracts the main diagonal of the matrix. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-matlab">
+my_mat = [1, 2, 3; 4, 5, 7]
+diag(my_mat)
+
+</pre>
+</div>
+
+<pre class="example">
+my_mat = [1, 2, 3; 4, 5, 7]
+
+my_mat =
+
+     1     2     3
+     4     5     7
+diag(my_mat)
+
+ans =
+
+     1
+     5
+</pre></li>
+</ul></dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgf873226" class="outline-2">
+<h2 id="orgf873226">Accessing elements</h2>
+<div class="outline-text-2" id="text-orgf873226">
+<ul class="org-ul">
+<li><p>
+To access element i,j of a matrix <code>M</code>, use <code>M(i,j)</code> 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-matlab">M = [10 2 5; 42 1 1];
+
+M
+
+M(2,1)
+</pre>
+</div>
+
+<pre class="example">
+M = [10 2 5; 42 1 1];
+M
+
+M =
+
+    10     2     5
+    42     1     1
+M(2,1)
+
+ans =
+
+    42
+</pre>
+
+<ul class="org-ul">
+<li><p>
+For this to work, indices must be "in bounds", i.e., if your matrix is \(n\times m\), make sure \(i \in \{1,\ldots, n\}\) and \(j \in \{1,\ldots, m\}\).
+</p>
+
+<p>
+In the above example, for example <code>M(5,1)</code> will give an error because the matrix has 2 rows and we're trying to access row number 5.
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">
+M(5, 1)
+
+</pre>
+</div>
+
+<pre class="example">
+M(5, 1)
+&lt;ERRORTXT&gt;
+Index in position 1 exceeds array bounds (must not exceed 2).
+&lt;/ERRORTXT&gt;
+</pre></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga6b189b" class="outline-2">
+<h2 id="orga6b189b">Random numbers</h2>
+<div class="outline-text-2" id="text-orga6b189b">
+<ul class="org-ul">
+<li>In many applications, we need to generate random numbers of a given probability distribution</li>
+<li>MATLAB has some built-in random number generators: 
+<ol class="org-ol">
+<li><p>
+Uniform[0,1]
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">unif_number = rand
+unif_square_mat = rand(3)
+unif_general_mat = rand(3,5)
+</pre>
+</div>
+
+<pre class="example">
+unif_number = rand
+
+unif_number =
+
+    0.3230
+unif_square_mat = rand(3)
+
+unif_square_mat =
+
+    0.3618    0.6310    0.4309
+    0.2283    0.0921    0.4937
+    0.2937    0.4337    0.4258
+unif_general_mat = rand(3,5)
+
+unif_general_mat =
+
+    0.3123    0.9442    0.1156    0.8663    0.9856
+    0.4264    0.5018    0.3173    0.2505    0.5195
+    0.8934    0.6240    0.4148    0.4830    0.6129
+</pre></li>
+<li><p>
+Normal(0,1)
+</p>
+
+<div class="org-src-container">
+<pre class="src src-matlab">stdnorm_number = randn
+stdnorm_square_mat = randn(3)
+stdnorm_general_mat = randn(3,5)
+</pre>
+</div>
+
+<pre class="example">
+stdnorm_number = randn
+
+stdnorm_number =
+
+   -1.1444
+stdnorm_square_mat = randn(3)
+
+stdnorm_square_mat =
+
+    1.4071   -0.1056    0.8633
+    0.2395   -0.4961    0.8507
+    0.1281   -0.3144    0.0305
+stdnorm_general_mat = randn(3,5)
+
+stdnorm_general_mat =
+
+    0.3836    0.5555    1.3058    0.1489    0.6645
+    0.3905    0.6471   -0.4932   -1.2745    1.6328
+    0.2848   -1.0154   -0.9348    0.7013   -1.4531
+</pre></li>
+</ol></li>
+
+<li>Importantly, every subsequent draw of a random number, within a vector or otherwise, is <b>independent</b> of previous draws</li>
+</ul>
+</div>
+
+<div id="outline-container-org5ec121b" class="outline-4">
+<h4 id="org5ec121b">Exercises</h4>
+<div class="outline-text-4" id="text-org5ec121b">
+<ol class="org-ol">
+<li>Create a 15x1 vector where each component is drawn independent from a
+Uniform[0, 1] distribution</li>
+<li>Create a 2x2 matrix where all elements but (2,1) are independent standard
+normal, and entry (2,1) is uniform[0,1].</li>
+<li>Create a 2x2 matrix where all elements are drawn independent U[-1, 2]</li>
+<li>Create a 2x2 matrix where all elements are drawn independent N(1, 0.16)</li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-orgf8fd752" class="outline-3">
+<h3 id="orgf8fd752">Seeding and reproducibility</h3>
+<div class="outline-text-3" id="text-orgf8fd752">
+<ul class="org-ul">
+<li>Note that if I type <code>rand</code> here and you do the same on your computer, the
+output will be two different numbers</li>
+<li>Problem: if I haven't seen you actually generate the number, how do I know it's random?</li>
+<li>If my results depend on simulation, I might have just made up random-looking numbers that have some desired output</li>
+<li><p>
+To avoid that, <b>always seed code that uses simulations</b>. 
+</p>
+
+<p>
+To generate a random number generator seed, use <code>rng</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">rng(123)
+
+my_random_number = rand
+</pre>
+</div>
+
+<pre class="example">
+rng(123)
+my_random_number = rand
+
+my_random_number =
+
+    0.6965
+</pre>
+
+<p>
+will consistently output 0.6965, on anyone's computer. 
+</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org900b1a8" class="outline-2">
+<h2 id="org900b1a8">Plotting</h2>
+<div class="outline-text-2" id="text-org900b1a8">
+<ul class="org-ul">
+<li>The main plotting command for 2d plots is <code>plot</code></li>
+<li>Examples: 
+<ol class="org-ol">
+<li><p>
+Plotting the square function for integers from 1 to 100
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">x = 1<span style="color: #6434A3;">:</span>100;
+y = x<span style="color: #6434A3;">.^</span>2;
+
+plot(x,y);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./output/example1.png" alt="example1.png" />
+</p>
+</div></li>
+
+<li><p>
+Note how Matlab creates a line by default. You can change this with the third argument in the plot function. For example,  
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">plot(x,y, <span style="color: #008000;">'o'</span>);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./output/example2.png" alt="example2.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>That literally sets 'o' instead of a line. You can use '&#x2013;' for a dashed line, '-.' for a dashed-dotted line, '+' for pluses, among other options</li>
+</ul></li>
+<li><p>
+For setting a color, append the starting letter of a sufficiently normal color. For example, '&#x2013;r' will set a red dashed line.
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">plot(x,y, <span style="color: #008000;">'--r'</span>);
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./output/example3.png" alt="example3.png" />
+</p>
+</div></li>
+</ol></li>
+</ul>
+</div>
+
+
+<div id="outline-container-org6966a55" class="outline-3">
+<h3 id="org6966a55">Subplots</h3>
+</div>
+
+<div id="outline-container-orgb69478f" class="outline-3">
+<h3 id="orgb69478f">Saving results</h3>
+</div>
+
+<div id="outline-container-org43163e8" class="outline-3">
+<h3 id="org43163e8">Two ways of plotting the density of a Chi<sup>2</sup> distribution</h3>
+<div class="outline-text-3" id="text-org43163e8">
+<ul class="org-ul">
+<li>In this section, we will plot (an approximation of) the density function of a \(\chi^2(q)\) distribution</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org5345378" class="outline-2">
+<h2 id="org5345378">Functions</h2>
+<div class="outline-text-2" id="text-org5345378">
+<ul class="org-ul">
+<li>An important part of sane programming is to decompose your code in independent modules</li>
+<li>That is crucial for <b>code reuse</b> and <b>readability</b></li>
+</ul>
+
+
+<ul class="org-ul">
+<li>Consider the following example. Suppose you have a matrix \(M\)</li>
+</ul>
+
+
+<div class="org-src-container">
+<pre class="src src-matlab">rng(123)
+
+<span style="color: #8D8D84; font-style: italic;">% Randomly generated matrix</span>
+M = rand(5)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Gustavo Pereira</p>
+<p class="date">Created: 2020-01-20 Mon 12:47</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
