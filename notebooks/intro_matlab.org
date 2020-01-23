@@ -7,53 +7,53 @@
 * (Almost) everything is a matrix
   
   - In MATLAB, the most common data type is a matrix of real (or more precisely, floating point) numbers.
-  - All the following commands create an object of the type Matrix, with floating point elements: 
+  - All the following commands create an object of the type Matrix, with floating point elements:
   #+begin_src matlab :session :exports code
-    u = [1,2.5,3];
+    u = [1,2.5,3]; % Ending with semicolon suppresses output
     A = [1 2 3; 4 5 6];
     b = 2.5;
     c = pi;
   #+end_src
-  - You can inspect dimension of the objects by applying the function ~size~
-    #+begin_src matlab :session :exports both
-      size(u)
-      size(A)
-      size(b)
-      size(c)
-    #+end_src
+      - You can inspect dimension of the objects by applying the function ~size~
+        #+begin_src matlab :session :exports both
+          size(u)
+          size(A)
+          size(b)
+          size(c)
+        #+end_src
 
-    #+RESULTS:
-    #+begin_example
-    size(u)
+        #+RESULTS:
+        #+begin_example
+        size(u)
 
-    ans =
+        ans =
 
-         1     3
-    size(A)
+             1     3
+        size(A)
 
-    ans =
+        ans =
 
-         2     3
-    size(b)
+             2     3
+        size(b)
 
-    ans =
+        ans =
 
-         1     1
-    size(c)
+             1     1
+        size(c)
 
-    ans =
+        ans =
 
-         1     1
-    #+end_example
-  - There are data types other than matrices. For example
-    + structs :: An object that groups sub-objects of any type. 
-    + characters/strings :: used to store text
-    + tables :: as the name suggests, ; similar to ~data.frame~ in R
-  - For details, check out the matlab [[https://www.mathworks.com/help/matlab/data-types.html][documentation]] on data types
+             1     1
+        #+end_example
+      - There are data types other than matrices. For example
+        + structs :: An object that groups sub-objects of any type.
+        + characters/strings :: used to store text
+        + tables :: as the name suggests, ; similar to ~data.frame~ in R
+      - For details, check out the matlab [[https://www.mathworks.com/help/matlab/data-types.html][documentation]] on data types
 
 ** Basic matrix commands
-   
-   - zeros :: generates a matrix of zeros of specified dimension. 
+
+   - zeros :: generates a matrix of zeros of specified dimension.
      #+begin_src matlab :session :exports both
        zeros(2,2)
 
@@ -81,19 +81,19 @@
      + /row/column vector/: creates a diagonal matrix whose main diagonal consists of those elements
 
        #+begin_src matlab :session :exports both
-       diag([1,2,5])
+         diag([1,2,5])
        #+end_src
 
        #+RESULTS:
        : diag([1,2,5])
-       : 
+       :
        : ans =
-       : 
+       :
        :      1     0     0
        :      0     2     0
        :      0     0     5
-       
-     + /matrix/:  extracts the main diagonal of the matrix. 
+
+     + /matrix/:  extracts the main diagonal of the matrix.
 
        #+begin_src matlab :session :exports both
 
@@ -119,9 +119,9 @@
        #+end_example
 
 
-* Accessing elements 
-  - To access element i,j of a matrix ~M~, use ~M(i,j)~ 
-    
+* Accessing elements
+  - To access element i,j of a matrix ~M~, use ~M(i,j)~
+
     #+begin_src matlab :session :exports both
       M = [10 2 5; 42 1 1];
 
@@ -160,11 +160,11 @@
       : <ERRORTXT>
       : Index in position 1 exceeds array bounds (must not exceed 2).
       : </ERRORTXT>
-      
+
 * Random numbers
 
   - In many applications, we need to generate random numbers of a given probability distribution
-  - MATLAB has some built-in random number generators: 
+  - MATLAB has some built-in random number generators:
     1) Uniform[0,1]
        #+begin_src matlab :session :exports both
          unif_number = rand
@@ -195,14 +195,14 @@
            0.8116    0.9390    0.6225    0.3012    0.8443
        #+end_example
     2) Normal(0,1)
-       
-       #+begin_src matlab :session :exports both 
+
+       #+begin_src matlab :session :exports both
          stdnorm_number = randn
          stdnorm_square_mat = randn(3)
          stdnorm_general_mat = randn(3,5)
        #+end_src
   - Importantly, every subsequent draw of a random number, within a vector or otherwise, is *independent* of previous draws
-   
+
 *** Exercises
     1) Create a 15x1 vector where each component is drawn independent from a
        Uniform[0, 1] distribution
@@ -210,15 +210,18 @@
        normal, and entry (2,1) is uniform[0,1].
     3) Create a 2x2 matrix where all elements are drawn independent U[-1, 2]
     4) Create a 2x2 matrix where all elements are drawn independent N(1, 0.16)
+    5) Create a vector where each entry is one of $\{1,2,3,4\}$ according
+       to the probability mass specification (0.01, 0.09, 0.8, 0.1)?
+    6) How do you tell if the draw in (5) was reasonable?
 
-  
+
 ** Seeding and reproducibility
-   
+
    - Note that if I type ~rand~ here and you do the same on your computer, the
      output will be two different numbers
    - Problem: if I haven't seen you actually generate the number, how do I know it's random?
    - If my results depend on simulation, I might have just made up random-looking numbers that have some desired output
-   - To avoid that, *always seed code that uses simulations*. 
+   - To avoid that, *always seed code that uses simulations*.
 
      To generate a random number generator seed, use ~rng~:
      #+begin_src matlab :session :exports both
@@ -230,16 +233,16 @@
      #+RESULTS:
      : rng(123)
      : my_random_number = rand
-     : 
+     :
      : my_random_number =
-     : 
+     :
      :     0.6965
-     will consistently output 0.6965, on anyone's computer. 
+     will consistently output 0.6965, on anyone's computer.
 
 
 * IN_PROGRESS Plotting
   - The main plotting command for 2d plots is ~plot~
-  - Examples: 
+  - Examples:
     1) Plotting the square function for integers from 1 to 100
        #+begin_src matlab :session :results file graphics :exports both :file ./output/example1.png
          x = 1:100;
@@ -250,15 +253,15 @@
 
        #+RESULTS:
        [[file:./output/example1.png]]
-       
-    2) Note how Matlab creates a line by default. You can change this with the third argument in the plot function. For example,  
+
+    2) Note how Matlab creates a line by default. You can change this with the third argument in the plot function. For example,
        #+begin_src matlab :session :results file graphics :exports both :file ./output/example2.png
          plot(x,y, 'o');
        #+end_src
 
        #+RESULTS:
        [[file:./output/example2.png]]
-       
+
        - That literally sets 'o' instead of a line. You can use '--' for a dashed line, '-.' for a dashed-dotted line, '+' for pluses, among other options
     3) For setting a color, append the starting letter of a sufficiently normal color. For example, '--r' will set a red dashed line.
        #+begin_src matlab :session :results file graphics :exports both :file ./output/example3.png
@@ -267,14 +270,160 @@
 
        #+RESULTS:
        [[file:./output/example3.png]]
-      
-         
-** TODO Subplots
 
-** TODO Saving results
 
-** TODO Two ways of plotting the density of a Chi^2 distribution 
-   - In this section, we will plot (an approximation of) the density function of a $\chi^2(q)$ distribution
+** Comparing curves
+   - Let's consider the following case: we want to compare the functions $x \mapsto x^2$ and $x \mapsto 0.5 + x/2$
+
+   - There are two major ways of proceeding:
+     1) *Two plots side by side*
+
+        This can be done by using ~hold on~ and using the ~plot~ command twice:
+        #+begin_src matlab :session :results file graphics :exports both :file ./output/example4.png
+          x = linspace(0, 1, 100); % Creates equally spaced range between 0 and 1 with 100 points
+          y = x.^2;
+          z = 0.5 + x/2;
+
+
+          figure;
+          hold on;
+          plot(x,y);
+          plot(x,z);
+
+          legend('Square function', 'Affine function')
+        #+end_src
+
+        #+RESULTS:
+        [[file:./output/example4.png]]
+
+        Alternatively, you can also put the y-axis vectors side by side in a matrix:
+        #+begin_src matlab :session :results file graphics :exports both :file ./output/example5.png
+          Y = [y' z'];
+
+          figure;
+          plot(x, Y);
+          legend('Square function', 'Affine function') % Notice the order!
+        #+end_src
+
+        #+RESULTS:
+        [[file:./output/example5.png]]
+        - Note that I took the transpose of inner vectors when defining ~Y~ matrix. Why?
+
+     2) *Subplots.*
+
+        As the name suggests, this technique creates multiple windows within a
+        bigger window. The way to achieve this is with the ~subplot~ command.
+
+        #+begin_src matlab :session :results file graphics :exports both :file ./output/example6.png
+
+          figure;
+          subplot(2,2,1)
+          plot(x, x)
+
+
+          subplot(2,2,2)
+          plot(x, y)
+
+          subplot(2,2,3)
+          plot(x, z)
+
+          subplot(2,2,4)
+          plot(x, sin(10*x))
+        #+end_src
+
+        #+RESULTS:
+        [[file:./output/example6.png]]
+
+** Example: two ways of plotting the density of a Chi^2 distribution
+
+   - There are roughly two ways of plotting the density of a random variable
+     1) If you can /sample/ from this variable: take a very large sample and
+        create a histogram. The ~hist~ command achieves this.
+     2) If you know the expression for the density function: choose a reasonable support and plot
+   - In this section, we'll apply it to a $\chi^2(q)$ distribution. Let's take
+     $q=4$ for example.
+
+*** Sample histogram
+    - Remember that a $\chi^2(q)$ is has a distribution identical to the sum of $q$ independent standard normal random variables.
+
+      Suppose we want to sample $4$ independent normal, N times for large N. We can use the ~randn~ command to find a 4xN matrix with independent normal entries:
+      #+begin_src matlab :session :exports both
+        rng(123); % for reproducibility
+
+        q = 4;
+        N = 10000;
+        sampmat = randn(q, N);
+
+        % Show first 10 columns
+        sampmat(:,1:10)
+      #+end_src
+
+      #+RESULTS:
+      #+begin_example
+      rng(123); % for reproducibility
+      q = 4;
+      N = 10000;
+      sampmat = randn(q, N);
+      % Show first 10 columns
+      sampmat(:,1:10)
+
+      ans =
+
+          0.7643    0.6680   -0.0329   -0.1337   -0.9109    0.3199    0.6204   -1.3698   -0.1307   -0.2998
+         -0.6050   -0.3235   -0.2951   -1.6757   -0.4629    1.0635   -0.6453    0.5432   -0.0114    1.4971
+         -1.0350    1.3343   -0.5548   -0.3487    0.1227    0.9011   -0.3651   -1.7078   -0.1020    1.3880
+          0.2014    0.6214    0.5644    0.8456    0.0900    0.2872   -0.5834   -0.0646   -0.9234    0.0054
+      #+end_example
+
+      Now we can square all elements, and do row-wise sum using the function ~sum~:
+
+      #+begin_src matlab :session :exports both
+        sampmat_sq = sampmat .^ 2;
+        samp = sum(sampmat_sq, 1);
+        samp(:, 1:10)
+      #+end_src
+
+      #+RESULTS:
+      : sampmat_sq = sampmat .^ 2;
+      : samp = sum(sampmat_sq, 1);
+      : samp(:, 1:10)
+      : 
+      : ans =
+      : 
+      :     2.0620    2.7175    0.7145    3.6625    1.0673    2.1279    1.2749    5.0921    0.8802    4.2579
+
+      In the variable ~samp~, we have an independent sample of $\chi^2(4)$! Let's do the histogram:
+
+      #+begin_src matlab :session :exports both :results file graphics :file ./output/histogram_density.png
+        histogram(samp, 'Normalization', 'pdf')
+      #+end_src
+
+      #+RESULTS:
+      [[file:./output/histogram_density.png]]
+
+*** Using the closed form expression
+
+    From Wikipedia, the pdf of a $\chi^2(4)$ random variable
+    is
+    \[ \frac{1}{2^{q/2} \Gamma(q/2) } x^{q/2 - 1} e^{-x/2}   \]
+
+
+    #+begin_src matlab :session :exports both :results file graphics :file ./output/closedform_density.png
+      xmax = 15;
+      npoints = 100;
+      q = 4;
+
+      x = linspace(0, 15, npoints);
+
+      integr_const = 2^(q/2) * gamma(q/2);
+      y = integr_const * x.^(q/2 - 1) .* exp(-x/2) % Why am I adding dots here?
+
+      figure;
+      plot(x, y)
+    #+end_src
+
+    #+RESULTS:
+    [[file:./output/closedform_density.png]]
 
 
 * IN_PROGRESS Functions
