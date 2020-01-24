@@ -147,13 +147,14 @@
         42
     #+end_example
 
-    + For this to work, indices must be "in bounds", i.e., if your matrix is $n\times m$, make sure $i \in \{1,\ldots, n\}$ and $j \in \{1,\ldots, m\}$.
+    + For this to work, indices must be "in bounds", i.e., if your matrix is
+      $n\times m$, make sure $i \in \{1,\ldots, n\}$ and $j \in \{1,\ldots,
+      m\}$.
 
-      In the above example, for example ~M(5,1)~ will give an error because the matrix has 2 rows and we're trying to access row number 5.
+      In the above example, for example ~M(5,1)~ will give an error because the
+      matrix has 2 rows and we're trying to access row number 5.
       #+begin_src matlab :session :exports both
-
         M(5, 1)
-
       #+end_src
 
       #+RESULTS:
@@ -163,7 +164,7 @@
       : </ERRORTXT>
 
 * Random numbers
-
+  
   - In many applications, we need to generate random numbers of a given probability distribution
   - MATLAB has some built-in random number generators:
     1) Uniform[0,1]
@@ -202,19 +203,8 @@
          stdnorm_square_mat = randn(3)
          stdnorm_general_mat = randn(3,5)
        #+end_src
-  - Importantly, every subsequent draw of a random number, within a vector or otherwise, is *independent* of previous draws
-
-*** Exercises
-    1) Create a 15x1 vector where each component is drawn independent from a
-       Uniform[0, 1] distribution
-    2) Create a 2x2 matrix where all elements but (2,1) are independent standard
-       normal, and entry (2,1) is uniform[0,1].
-    3) Create a 2x2 matrix where all elements are drawn independent U[-1, 2]
-    4) Create a 2x2 matrix where all elements are drawn independent N(1, 0.16)
-    5) Create a vector where each entry is one of $\{1,2,3,4\}$ according
-       to the probability mass specification (0.01, 0.09, 0.8, 0.1)?
-    6) How do you tell if the draw in (5) was reasonable?
-
+  - Importantly, every subsequent draw of a random number, within a vector or
+    otherwise, is *independent* of previous draws
 
 ** Seeding and reproducibility
 
@@ -241,36 +231,48 @@
      will consistently output 0.6965, on anyone's computer.
 
 
-* IN_PROGRESS Plotting
+** Exercises
+   1) Create a 15x1 vector where each component is drawn independent from a Uniform[0, 1] distribution
+   2) Create a 2x2 matrix where all elements but (2,1) are independent standard normal, and entry (2,1) is uniform[0,1].
+   3) Create a 2x2 matrix where all elements are drawn independent U[-1, 2]
+   4) Create a 2x2 matrix where all elements are drawn independent N(1, 0.16)
+   5) Create a vector, with arbitrary length, where each entry is one of
+      $\{1,2,3,4\}$ according to the probability specification (0.01, 0.09,
+      0.8, 0.1).
+   6) How do you tell if the draw in (5) was reasonable?
+
+* Plotting
   - The main plotting command for 2d plots is ~plot~
   - Examples:
     1) Plotting the square function for integers from 1 to 100
-       #+begin_src matlab :session :results file graphics :exports both :file ./output/example1.png
+       #+begin_src matlab :session :results file graphics :exports both :file ./output/reci_example1.png
          x = 1:100;
          y = x.^2;
 
+         figure; % Start a new plotting instance (not strictly necessary if this is the
+                 % first plot)
          plot(x,y);
        #+end_src
 
        #+RESULTS:
-       [[file:./output/example1.png]]
+       [[file:./output/reci_example1.png]]
 
     2) Note how Matlab creates a line by default. You can change this with the third argument in the plot function. For example,
-       #+begin_src matlab :session :results file graphics :exports both :file ./output/example2.png
+       #+begin_src matlab :session :results file graphics :exports both :file ./output/reci_example2.png
          plot(x,y, 'o');
        #+end_src
 
        #+RESULTS:
-       [[file:./output/example2.png]]
+       [[file:./output/reci_example2.png]]
 
        - That literally sets 'o' instead of a line. You can use '--' for a dashed line, '-.' for a dashed-dotted line, '+' for pluses, among other options
     3) For setting a color, append the starting letter of a sufficiently normal color. For example, '--r' will set a red dashed line.
-       #+begin_src matlab :session :results file graphics :exports both :file ./output/example3.png
+       #+begin_src matlab :session :results file graphics :exports both :file ./output/reci_example3.png
          plot(x,y, '--r');
        #+end_src
 
        #+RESULTS:
-       [[file:./output/example3.png]]
+       [[file:./output/reci_example3.png]]
 
 
 ** Comparing curves
@@ -280,7 +282,7 @@
      1) *Two plots side by side*
 
         This can be done by using ~hold on~ and using the ~plot~ command twice:
-        #+begin_src matlab :session :results file graphics :exports both :file ./output/example4.png
+        #+begin_src matlab :session :results file graphics :exports both :file ./output/reci_example4.png
           x = linspace(0, 1, 100); % Creates equally spaced range between 0 and 1 with 100 points
           y = x.^2;
           z = 0.5 + x/2;
@@ -295,10 +297,10 @@
         #+end_src
 
         #+RESULTS:
-        [[file:./output/example4.png]]
+        [[file:./output/reci_example4.png]]
 
         Alternatively, you can also put the y-axis vectors side by side in a matrix:
-        #+begin_src matlab :session :results file graphics :exports both :file ./output/example5.png
+        #+begin_src matlab :session :results file graphics :exports both :file ./output/reci1_example5.png
           Y = [y' z'];
 
           figure;
@@ -307,7 +309,7 @@
         #+end_src
 
         #+RESULTS:
-        [[file:./output/example5.png]]
+        [[file:./output/reci_example5.png]]
         - Note that I took the transpose of inner vectors when defining ~Y~ matrix. Why?
 
      2) *Subplots.*
@@ -315,7 +317,7 @@
         As the name suggests, this technique creates multiple windows within a
         bigger window. The way to achieve this is with the ~subplot~ command.
 
-        #+begin_src matlab :session :results file graphics :exports both :file ./output/example6.png
+        #+begin_src matlab :session :results file graphics :exports both :file ./output/reci1_example6.png
 
           figure;
           subplot(2,2,1)
@@ -331,12 +333,11 @@
           subplot(2,2,4)
           plot(x, sin(10*x))
         #+end_src
-
+        
         #+RESULTS:
-        [[file:./output/example6.png]]
+        [[file:./output/reci_example6.png]]
 
 ** Example: two ways of plotting the density of a Chi^2 distribution
-
    - There are roughly two ways of plotting the density of a random variable
      1) If you can /sample/ from this variable: take a very large sample and
         create a histogram. The ~hist~ command achieves this.
@@ -395,28 +396,35 @@
 
       In the variable ~samp~, we have an independent sample of $\chi^2(4)$! Let's do the histogram:
 
-      #+begin_src matlab :session :exports both :results file graphics :file ./output/histogram_density.png
+      #+begin_src matlab :session :exports both :results file graphics :file ./output/reci_1histogram_density.png
+        figure;
         histogram(samp, 'Normalization', 'pdf')
       #+end_src
 
       #+RESULTS:
-      [[file:./output/histogram_density.png]]
-
+      [[file:./output/reci_histogram_density.png]]
+      
+      + Two comments on the above: 
+        1) We have to set option ~'Normalization'~ to ~'pdf'~ to have a result
+           that is comparable to the pdf. Without setting this, ~histogram~
+           defaults to showing the /number/ of sample points in each bin. 
+        2) The default style is a bar plot but you can tweak it. Check the histogram documentation in the MATLAB page.
+           [[https://www.mathworks.com/help/matlab/ref/matlab.graphics.chart.primitive.histogram.html][Documentation.]]
 *** Using the closed form expression
-
     From Wikipedia, the pdf of a $\chi^2(4)$ random variable
     is
     \[ \frac{1}{2^{q/2} \Gamma(q/2) } x^{q/2 - 1} e^{-x/2}   \]
 
 
-    #+begin_src matlab :session :exports both :results file graphics :file ./output/closedform_density.png
-      xmax = 15;
+    I arbitrarily set the domain to [0,30] and plot 100 points. 
+    #+begin_src matlab :session :exports both :results file graphics :file ./output/reci1_closedform_density.png
+      xmax = 30;
       npoints = 100;
       q = 4;
 
-      x = linspace(0, 15, npoints);
+      x = linspace(0, xmax, npoints);
 
-      integr_const = 2^(q/2) * gamma(q/2);
+      integr_const = 1/2^(q/2) * gamma(q/2);
       y = integr_const * x.^(q/2 - 1) .* exp(-x/2) % Why am I adding dots here?
 
       figure;
@@ -424,20 +432,23 @@
     #+end_src
 
     #+RESULTS:
-    [[file:./output/closedform_density.png]]
+    [[file:./output/reci_closedform_density.png]]
 
+*** Comparing the two
+    
+    #+begin_src matlab :session :exports both :results file graphics :file ./output/reci1_hist_compare.png
+      figure;
+      hold on;
+      histogram(samp, 'Normalization', 'pdf') 
+      plot(x, y, 'LineWidth', 3)
+    #+end_src
 
-* IN_PROGRESS Functions
+    #+RESULTS:
+    [[file:./output/reci_reci1_hist_compare.png]]
+
+* TODO Functions
   - An important part of sane programming is to decompose your code in independent modules
   - That is crucial for *code reuse* and *readability*
-  
 
-  - Consider the following example. Suppose you have a matrix $M$
-    
-    #+begin_src matlab :session
-      rng(123)
-
-      % Randomly generated matrix
-      M = rand(5)
-    #+end_src
+  - Consider the following example. tbc
 

@@ -1,0 +1,260 @@
+#+TITLE: Solutions to questions in Intro to MATLAB notebook
+#+AUTHOR: Gustavo
+#+HTML_HEAD: <link rel="stylesheet" href="https://gongzhitaao.org/orgcss/org.css" />
+
+* Exercises
+  1) Create a 15x1 vector where each component is drawn independent from a Uniform[0, 1] distribution
+   
+     *A:* Use rand command. ~randn(15, 1)~ should do the trick.
+  2) Create a 2x2 matrix where all elements but (2,1) are independent standard normal, and entry (2,1) is uniform[0,1].
+      
+     *A:* Create a 2x2 standard normal matrix, substitute element (2,1).
+     #+begin_src matlab :session :exports both
+       rng(44)
+       m2 = randn(2,2);
+       m2(2,1) = rand
+     #+end_src
+
+     #+RESULTS:
+     : rng(44)
+     : m2 = randn(2,2);
+     : m2(2,1) = rand
+     : 
+     : m2 =
+     : 
+     :     0.9517    0.8655
+     :     0.3593   -0.2708
+  3) Create a 2x2 matrix where all elements are drawn independent U[-1, 2]
+      
+     *A:* Expand the uniform to [0,3] and translate by -1. 
+     #+begin_src matlab :session
+       rng(44) % For reproducibility
+
+       m3_init = rand(2,2);
+       m3 = m3_init * 3 - 1
+     #+end_src
+
+     #+RESULTS:
+     : rng(44) % For reproducibility
+     : m3_init = rand(2,2);
+     : m3 = m3_init * 3 - 1
+     : 
+     : m3 =
+     : 
+     :     1.5045    1.2339
+     :    -0.6856    0.0815
+  4) Create a 2x2 matrix where all elements are drawn independent N(1, 0.16)
+      
+     *A.* Do a similar shift/expand trick. Remember that if $X \sim N(0,1)$, then
+           \[ \sigma X + \mu \sim N(\mu, \sigma^2) \]
+            
+     #+begin_src matlab :session :exports both
+       rng(44);  % For reproducibility
+
+       sig = sqrt(0.16);
+       mu = 1;
+
+       m4_init = randn(2,2);
+       m4 = mu + sig *  m4_init
+     #+end_src
+
+     #+RESULTS:
+     #+begin_example
+     rng(44);  % For reproducibility
+     sig = sqrt(0.16);
+     mu = 1;
+     m4_init = randn(2,2);
+     m4 = mu + sig *  m4_init
+
+     m4 =
+
+         1.3807    1.3462
+         0.8389    0.8917
+     #+end_example
+  5) Create a vector, with arbitrary length, where each entry is one of
+     $\{1,2,3,4\}$ according to the probability mass specification (0.01, 0.09,
+     0.8, 0.1)
+      
+     *A.* Let $\mathbf p = (0.01, 0.09, 0.8, 0.1)$. Take a uniform random draw from
+     [0,1], say $U$. Then consider the following rule: 
+     
+     #+NAME: eq:cdf_quantile
+     \begin{equation} 
+     F(U) = \begin{cases} 
+         1 & \text{if } U \leq 0.01 \\
+         2 & \text{if } 0.01 < U \leq 0.01 + 0.09 \\
+         3 & \text{if } 0.01 + 0.09 < U \leq 0.01 + 0.09 + 0.8 \\
+         4 & \text{if } 0.01 + 0.09 + 0.8 < U \leq 0.01 + 0.09 + 0.8 + 0.1 
+     \end{cases}
+     \end{equation}
+      
+     It's not hard to verify that $\Pr \{ F(U) = 1 \} = 0.01$, $\Pr \{ F(U) = 2 \} = 0.01$,
+     $\Pr \{ F(U) = 3 \} = 0.8$ and $\Pr \{ F(U) = 4 \} = 0.1$. Now, how do we implement this? 
+      
+     Note that $F$ is basically comparing $U$ above against the /cumulative sum/ of $p$. Matlab has a command for cumulative sums: 
+     #+begin_src matlab :session :exports both 
+       p = [0.01, 0.09, 0.8, 0.1];
+       cum_p = cumsum(p)
+     #+end_src
+
+     #+RESULTS:
+     : p = [0.01, 0.09, 0.8, 0.1];
+     : cum_p = cumsum(p)
+     : 
+     : cum_p =
+     : 
+     :     0.0100    0.1000    0.9000    1.0000
+
+     Let's define something slightly more general than $F$. We define a function
+     that, for any u, finds the *first* entry of the cumulative sum of $\mathbf
+     p$ smaller than U. This is done below, for general scalar u and vector p
+     whose cumulative sum has been computed in advance.
+     #+begin_src matlab :session :eval no :exports code :tangle extracode/cumsum_findsmaller.m
+       % Tangled by intro_matlab_solutions.org
+
+       function jj = cumsum_findsmaller(u, cum_p)
+           jj = 0;
+           is_lower = false;
+           while ~is_lower    % continue until is_lower becomes true
+               jj = jj + 1;
+               is_lower = (u <= cum_p(jj)); % logical variable: either 0 or 1
+           end
+       end
+     #+end_src
+     - Convince yourself that this does exactly what $F$ above prescribes
+     
+     The code above is saved in ~extracode/cumsum_findsmaller.m~. Let's apply it
+     at several possible values of $u$ to check that it matches [[eq:cdf_quantile]].
+     #+begin_src matlab :session :exports both
+       addpath('extracode') % make sure `cumsum_findsmaller.m` is reachable
+
+       cumsum_findsmaller(0.005, cum_p) % should  be 1
+
+       cumsum_findsmaller(0.07, cum_p) %  should be 2
+
+       cumsum_findsmaller(0.5, cum_p)  % should be 3
+     #+end_src
+
+     #+RESULTS:
+     #+begin_example
+     addpath('extracode') % make sure `cumsum_findsmaller.m` is reachable
+     cumsum_findsmaller(0.005, cum_p) % should  be 1
+
+     ans =
+
+          1
+     cumsum_findsmaller(0.07, cum_p) %  should be 2
+
+     ans =
+
+          2
+     cumsum_findsmaller(0.5, cum_p)  % should be 3
+
+     ans =
+
+          3
+     #+end_example
+     
+     Seems about right. Now let's generate a sample: 
+     
+     #+begin_src matlab :session :exports code
+       rng(44)
+
+       sample_size = 1000;    % arbitrary sample size
+
+       tic;
+       store_sample = zeros(sample_size, 1); %  pre-allocate sample vector
+
+       for ii=1:sample_size
+           U=rand;
+           store_sample(ii)=cumsum_findsmaller(U, cum_p);
+       end
+       toc;
+
+     #+end_src
+
+     #+RESULTS:
+     #+begin_example
+     rng(44)
+     sample_size = 1000;    % arbitrary sample size
+     tic;
+     store_sample = zeros(sample_size, 1); %  pre-allocate sample vector
+     for ii=1:sample_size
+         U=rand;
+         store_sample(ii)=cumsum_findsmaller(U, cum_p);
+     end
+     toc;
+     Elapsed time is 0.022185 seconds.
+     #+end_example
+     
+     Notice that the above solution has in practice two loops:  
+     + One inside the function ~cumsum_findsmaller~
+     + The loop ranging from ~ii=1:samplesize~.
+     That goes against the general advice that we should avoid this type of
+     construction. How then would you proceed with built-in matrix operations?
+     
+     One (garbled and non-intuitive) way of doing it without loops is shown below. 
+
+     #+begin_src matlab :session :exports both
+
+       rng(44)
+
+       tic; 
+
+       unifsamp = rand(1, sample_size);
+       rep_matrix = repmat(unifsamp, 4, 1);
+       store_sample_v = sum(cum_p' < rep_matrix)+1;
+
+
+       toc;
+     #+end_src
+
+     #+RESULTS:
+     : rng(44)
+     : tic;
+     : unifsamp = rand(1, sample_size);
+     : rep_matrix = repmat(unifsamp, 4, 1);
+     : store_sample_v = sum(cum_p' < rep_matrix)+1;
+     : toc;
+     : Elapsed time is 0.024705 seconds.
+
+
+     In this case, there doesn't seem to be a clear benefit of using matrix
+     operations instead of loops.[fn:1]
+
+  6) How do you tell if the draw in (5) was reasonable?
+     
+     *A.* We can check, for example, the frequency that number $3$ shows up.
+     Because it has probability 80%, we'd expect the relative frequency to be
+     around 80%. This is checked below: 
+
+     #+begin_src matlab :session :exports both
+
+     sum(store_sample == 3) / length(store_sample)
+     sum(store_sample_v == 3) / length(store_sample_v)
+
+     #+end_src
+
+     #+RESULTS:
+     #+begin_example
+     sum(store_sample == 3) / length(store_sample)
+
+     ans =
+
+         0.8060
+     sum(store_sample_v == 3) / length(store_sample_v)
+
+     ans =
+
+         0.8060
+     #+end_example
+     
+
+     Which is around 80% of the time, indicating that we're sampling from the
+     right distribution.
+
+* Footnotes
+
+[fn:1] There is a reason for that: MATLAB has been improving the way it does
+just-in-time compilation. The function ~cumsum_findsmaller~ was likely JIT
+compiled. For this to happen, you have to write separate functions.

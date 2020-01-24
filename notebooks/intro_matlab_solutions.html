@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-01-23 Thu 21:40 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Solutions to questions in Intro to MATLAB notebook</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Gustavo" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" href="https://gongzhitaao.org/orgcss/org.css" />
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<style type="text/css">
+ pre.src {background-color: #FFFFFF; color: #333333;}</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Solutions to questions in Intro to MATLAB notebook</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org35bb261">1. Exercises</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org35bb261" class="outline-2">
+<h2 id="org35bb261"><span class="section-number-2">1</span> Exercises</h2>
+<div class="outline-text-2" id="text-1">
+<ol class="org-ol">
+<li><p>
+Create a 15x1 vector where each component is drawn independent from a Uniform[0, 1] distribution
+</p>
+
+<p>
+<b>A:</b> Use rand command. <code>randn(15, 1)</code> should do the trick.
+</p></li>
+<li><p>
+Create a 2x2 matrix where all elements but (2,1) are independent standard normal, and entry (2,1) is uniform[0,1].
+</p>
+
+<p>
+<b>A:</b> Create a 2x2 standard normal matrix, substitute element (2,1).
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">rng(44)
+m2 = randn(2,2);
+m2<span style="color: #6434A3;">(2,1) </span>= rand
+</pre>
+</div>
+
+<pre class="example">
+rng(44)
+m2 = randn(2,2);
+m2(2,1) = rand
+
+m2 =
+
+    0.9517    0.8655
+    0.3593   -0.2708
+</pre></li>
+<li><p>
+Create a 2x2 matrix where all elements are drawn independent U[-1, 2]
+</p>
+
+<p>
+<b>A:</b> Expand the uniform to [0,3] and translate by -1. 
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">rng(44) <span style="color: #8D8D84; font-style: italic;">% For reproducibility</span>
+
+m3_init = rand(2,2);
+m3 = m3_init <span style="color: #6434A3;">*</span> 3 <span style="color: #6434A3;">-</span> 1
+</pre>
+</div></li>
+<li><p>
+Create a 2x2 matrix where all elements are drawn independent N(1, 0.16)
+</p>
+
+<p>
+<b>A.</b> Do a similar shift/expand trick. Remember that if \(X \sim N(0,1)\), then
+      \[ \sigma X + \mu \sim N(\mu, \sigma^2) \]
+</p>
+
+<div class="org-src-container">
+<pre class="src src-matlab">rng(44);  <span style="color: #8D8D84; font-style: italic;">% For reproducibility</span>
+
+sig = sqrt(0.16);
+mu = 1;
+
+m4_init = randn(2,2);
+m4 = mu <span style="color: #6434A3;">+</span> sig <span style="color: #6434A3;">*</span>  m4_init
+</pre>
+</div>
+
+<pre class="example">
+rng(44);  % For reproducibility
+sig = sqrt(0.16);
+mu = 1;
+m4_init = randn(2,2);
+m4 = mu + sig *  m4_init
+
+m4 =
+
+    1.3807    1.3462
+    0.8389    0.8917
+</pre></li>
+<li><p>
+Create a vector, with arbitrary length, where each entry is one of
+\(\{1,2,3,4\}\) according to the probability mass specification (0.01, 0.09,
+0.8, 0.1)
+</p>
+
+<p>
+<b>A.</b> Let \(\mathbf p = (0.01, 0.09, 0.8, 0.1)\). Take a uniform random draw from
+[0,1], say \(U\). Then consider the following rule: 
+</p>
+
+\begin{equation} 
+\label{org6841851}
+F(U) = \begin{cases} 
+    1 & \text{if } U \leq 0.01 \\
+    2 & \text{if } 0.01 < U \leq 0.01 + 0.09 \\
+    3 & \text{if } 0.01 + 0.09 < U \leq 0.01 + 0.09 + 0.8 \\
+    4 & \text{if } 0.01 + 0.09 + 0.8 < U \leq 0.01 + 0.09 + 0.8 + 0.1 
+\end{cases}
+\end{equation}
+
+<p>
+It's not hard to verify that \(\Pr \{ F(U) = 1 \} = 0.01\), \(\Pr \{ F(U) = 2 \} = 0.01\),
+\(\Pr \{ F(U) = 3 \} = 0.8\) and \(\Pr \{ F(U) = 4 \} = 0.1\). Now, how do we implement this? 
+</p>
+
+<p>
+Note that \(F\) is basically comparing \(U\) above against the <i>cumulative sum</i> of \(p\). Matlab has a command for cumulative sums: 
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">p = [0.01, 0.09, 0.8, 0.1];
+cum_p = cumsum(p)
+</pre>
+</div>
+
+<pre class="example">
+p = [0.01, 0.09, 0.8, 0.1];
+cum_p = cumsum(p)
+
+cum_p =
+
+    0.0100    0.1000    0.9000    1.0000
+</pre>
+
+
+<p>
+Let's define something slightly more general than \(F\). We define a function
+that, for any u, finds the <b>first</b> entry of the cumulative sum of \(\mathbf
+     p\) smaller than U. This is done below, for general scalar u and vector p
+whose cumulative sum has been computed in advance.
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab"><span style="color: #8D8D84; font-style: italic;">% Tangled by intro_matlab_solutions.org</span>
+
+<span style="color: #0000FF;">function</span> <span style="color: #BA36A5;">jj</span> = <span style="color: #006699;">cumsum_findsmaller</span>(<span style="color: #BA36A5;">u</span>, <span style="color: #BA36A5;">cum_p</span>)
+    jj = 0;
+    is_lower = <span style="color: #D0372D;">false</span>;
+    <span style="color: #0000FF;">while</span> <span style="color: #6434A3;">~</span>is_lower    <span style="color: #8D8D84; font-style: italic;">% continue until is_lower becomes true</span>
+        jj = jj <span style="color: #6434A3;">+</span> 1;
+        is_lower = (u <span style="color: #6434A3;">&lt;=</span> cum_p(jj)); <span style="color: #8D8D84; font-style: italic;">% logical variable: either 0 or 1</span>
+    <span style="color: #0000FF;">end</span>
+<span style="color: #0000FF;">end</span>
+</pre>
+</div>
+<ul class="org-ul">
+<li>Convince yourself that this does exactly what \(F\) above prescribes</li>
+</ul>
+
+<p>
+The code above is saved in <code>extracode/cumsum_findsmaller.m</code>. Let's apply it
+at several possible values of \(u\) to check that it matches \eqref{org6841851}.
+</p>
+<div class="org-src-container">
+<pre class="src src-matlab">addpath(<span style="color: #008000;">'extracode'</span>) <span style="color: #8D8D84; font-style: italic;">% make sure `cumsum_findsmaller.m` is reachable</span>
+
+cumsum_findsmaller(0.005, cum_p) <span style="color: #8D8D84; font-style: italic;">% should  be 1</span>
+
+cumsum_findsmaller(0.07, cum_p) <span style="color: #8D8D84; font-style: italic;">%  should be 2</span>
+
+cumsum_findsmaller(0.5, cum_p)  <span style="color: #8D8D84; font-style: italic;">% should be 3</span>
+</pre>
+</div>
+
+<pre class="example">
+addpath('extracode') % make sure `cumsum_findsmaller.m` is reachable
+cumsum_findsmaller(0.005, cum_p) % should  be 1
+
+ans =
+
+     1
+cumsum_findsmaller(0.07, cum_p) %  should be 2
+
+ans =
+
+     2
+cumsum_findsmaller(0.5, cum_p)  % should be 3
+
+ans =
+
+     3
+</pre>
+
+<p>
+Seems about right. Now let's generate a sample: 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-matlab">rng(44)
+
+sample_size = 1000;    <span style="color: #8D8D84; font-style: italic;">% arbitrary sample size</span>
+
+<span style="color: #0000FF;">tic</span>;
+store_sample = zeros(sample_size, 1); <span style="color: #8D8D84; font-style: italic;">%  pre-allocate sample vector</span>
+
+<span style="color: #0000FF;">for</span> <span style="color: #BA36A5;">ii</span>=<span style="color: #D0372D;">1:sample_size</span>
+    U=rand;
+    store_sample(ii)=cumsum_findsmaller(U, cum_p);
+<span style="color: #0000FF;">end</span>
+<span style="color: #0000FF;">toc</span>;
+
+</pre>
+</div>
+
+<p>
+Notice that the above solution has in practice two loops:  
+</p>
+<ul class="org-ul">
+<li>One inside the function <code>cumsum_findsmaller</code></li>
+<li>The loop ranging from <code>ii=1:samplesize</code>.</li>
+</ul>
+<p>
+That goes against the general advice that we should avoid this type of
+construction. How then would you proceed with built-in matrix operations?
+</p>
+
+<p>
+One (garbled and non-intuitive) way of doing it without loops is shown below. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-matlab">
+rng(44)
+
+<span style="color: #0000FF;">tic</span>; 
+
+unifsamp = rand(1, sample_size);
+rep_matrix = repmat(unifsamp, 4, 1);
+store_sample_v = sum(cum_p<span style="color: #6434A3;">'</span> <span style="color: #6434A3;">&lt;</span> rep_matrix)<span style="color: #6434A3;">+</span>1;
+
+
+<span style="color: #0000FF;">toc</span>;
+</pre>
+</div>
+
+<pre class="example">
+rng(44)
+tic;
+unifsamp = rand(1, sample_size);
+rep_matrix = repmat(unifsamp, 4, 1);
+store_sample_v = sum(cum_p' &lt; rep_matrix)+1;
+toc;
+Elapsed time is 0.018616 seconds.
+</pre></li>
+</ol>
+
+
+<p>
+In this case, there doesn't seem to be a clear benefit of using matrix
+operations instead of loops.<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>
+</p>
+
+<ol class="org-ol">
+<li><p>
+How do you tell if the draw in (5) was reasonable?
+</p>
+
+<p>
+<b>A.</b> We can check, for example, the frequency that number \(3\) shows up.
+Because it has probability 80%, we'd expect the relative frequency to be
+around 80%. This is checked below: 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-matlab">
+sum(store_sample <span style="color: #6434A3;">==</span> 3) <span style="color: #6434A3;">/</span> length(store_sample)
+sum(store_sample_v <span style="color: #6434A3;">==</span> 3) <span style="color: #6434A3;">/</span> length(store_sample_v)
+
+</pre>
+</div>
+
+<pre class="example">
+sum(store_sample == 3) / length(store_sample)
+
+ans =
+
+    0.8060
+sum(store_sample_v == 3) / length(store_sample_v)
+
+ans =
+
+    0.8060
+</pre></li>
+</ol>
+
+
+<p>
+Which is around 80% of the time, indicating that we're sampling from the
+right distribution.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+There is a reason for that: MATLAB has been improving the way it does
+just-in-time compilation. The function <code>cumsum_findsmaller</code> was likely JIT
+compiled. For this to happen, you have to write separate functions.
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<p class="author">Author: Gustavo</p>
+<p class="date">Created: 2020-01-23 Thu 21:40</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
