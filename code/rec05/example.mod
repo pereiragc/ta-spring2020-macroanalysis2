@@ -14,7 +14,7 @@ sigmma = 0.01;
 betta = 0.988;
 deltta = 0.025;
 theta_n = 1.5;
-rrho = 0.9;  
+rrho = 0.9;
 
 % Model equilibrium conditions:
 model;

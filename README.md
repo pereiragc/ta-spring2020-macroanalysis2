@@ -26,3 +26,17 @@ Welcome! I created this repo to store and maintain material used or referred to 
 -   We also discussed the notion of social planner, collective welfare, and the connection between the associated allocations and the competitive equilibrium one.
 -   Material used:
     -   [Notes](notes/Recitation2.pdf)
+
+### Recitation 3: PS1
+
+### Recitation 4: PS2
+
+### Recitation 5
+
+-   Topics covered:
+    -   Solutions to PS3
+    -   Log-linearization
+    -   Dynare
+-   Material
+    -   [Notes](./notes/Recitation5.pdf)
+    -   [Dynare code](./code/rec05/example.mod)
